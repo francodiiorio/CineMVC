@@ -1,8 +1,11 @@
+using CineXperience.DataBase;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<CineXperienceContext>(options => options.UseInMemoryDatabase("CineXperienceDb"));
 builder.Services.AddControllersWithViews();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
