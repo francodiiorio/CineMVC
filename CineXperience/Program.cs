@@ -1,10 +1,12 @@
 using CineXperience.DataBase;
+using CineXperience.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<CineXperienceContext>(options => options.UseInMemoryDatabase("CineXperienceDb"));
+builder.Services.AddDbContext<CineXperienceContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CineXperienceDBCS")));
+builder.Services.AddIdentity<Usuario, Rol>().AddEntityFrameworkStores<CineXperienceContext>();
 builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
@@ -20,7 +22,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();    
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -97,7 +97,20 @@ namespace CineXperience.Controllers
             {
                 try
                 {
-                    _context.Update(cliente);
+                    var clienteDb = _context.Clientes.Find(cliente.Id);
+                    if(clienteDb == null)
+                    {
+                        return NotFound();
+                    }
+                    clienteDb.Nombre = cliente.Nombre;
+                    clienteDb.Apellido = cliente.Apellido;
+                    clienteDb.Dni = cliente.Dni;
+                    if(!ActualizarEmail(cliente, clienteDb))
+                    {
+                        ModelState.AddModelError("Email", "El correo electronico ya esta en uso");
+                        return View(cliente);
+                    }
+                    _context.Update(clienteDb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -114,6 +127,38 @@ namespace CineXperience.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
+        }
+
+        private bool ActualizarEmail(Cliente clienteForm, Cliente clienteDb)
+        {
+            bool resultado = true;
+            try
+            {
+                if (!clienteDb.NormalizedEmail.Equals(clienteForm.Email.ToUpper()))
+                {
+                    if (ExistEmail(clienteForm.Email))
+                    {
+                        resultado = false;
+                    }
+                    else
+                    {
+                        clienteDb.Email = clienteForm.Email;
+                        clienteDb.NormalizedEmail = clienteForm.Email.ToUpper();
+                        clienteDb.UserName = clienteForm.Email;
+                        clienteDb.NormalizedEmail = clienteForm.NormalizedEmail;
+                    }
+                }
+            }
+            catch
+            {
+                resultado = false;
+            }
+            return resultado;
+        }
+
+        private bool ExistEmail(string email)
+        {
+            return _context.Usuarios.Any(u=>u.NormalizedEmail == email.ToUpper());
         }
 
         // GET: Clientes/Delete/5

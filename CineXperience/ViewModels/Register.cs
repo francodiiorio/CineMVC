@@ -1,10 +1,10 @@
 ﻿using CineXperience.Helpers;
-using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
-namespace CineXperience.Models
+namespace CineXperience.ViewModels
 {
-    public class Usuario : IdentityUser<int>
+    public class Register
     {
         [Required(ErrorMessage = MsgError.Requerido)]
         [StringLength(50, MinimumLength = 2, ErrorMessage = MsgError.StrMaxMin)]
@@ -22,11 +22,17 @@ namespace CineXperience.Models
         [Display(Name = Displays.CorreoElectronico)]
         [EmailAddress(ErrorMessage = MsgError.NotValid)]
         [StringLength(20, MinimumLength = 6, ErrorMessage = MsgError.StrMaxMin)]
-        public override string Email 
-        {
-            get { return base.Email; }
-            set { base.Email = value; }
-        }
+        public string Email { get; set; }
 
+        [Required(ErrorMessage = MsgError.Requerido)]
+        [DataType(DataType.Password)]
+        [Display(Name = Displays.Password)]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = MsgError.Requerido)]
+        [DataType(DataType.Password)]
+        [Display(Name = Displays.ConfirmPassword)]
+        [Compare("Password", ErrorMessage = MsgError.PasswordMissmatch)]
+        public string ConfirmPassword { get; set; }
     }
 }
