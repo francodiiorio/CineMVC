@@ -238,7 +238,7 @@ namespace CineXperience.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table =>
+                constraints: table =>   
                 {
                     table.PrimaryKey("PK_PersonasRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(

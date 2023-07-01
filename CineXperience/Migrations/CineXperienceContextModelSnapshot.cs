@@ -45,7 +45,7 @@ namespace CineXperience.Migrations
 
                     b.HasIndex("FuncionId");
 
-                    b.ToTable("Entradas");
+                    b.ToTable("Entradas", (string)null);
                 });
 
             modelBuilder.Entity("CineXperience.Models.Funcion", b =>
@@ -77,7 +77,7 @@ namespace CineXperience.Migrations
 
                     b.HasIndex("SalaId");
 
-                    b.ToTable("Funcion");
+                    b.ToTable("Funcion", (string)null);
                 });
 
             modelBuilder.Entity("CineXperience.Models.Pelicula", b =>
@@ -106,7 +106,7 @@ namespace CineXperience.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pelicula");
+                    b.ToTable("Pelicula", (string)null);
                 });
 
             modelBuilder.Entity("CineXperience.Models.Sala", b =>
@@ -122,7 +122,7 @@ namespace CineXperience.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Salas");
+                    b.ToTable("Salas", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
