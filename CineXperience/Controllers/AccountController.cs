@@ -64,7 +64,7 @@ namespace CineXperience.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError(String.Empty, "Inicio de sesion invalido");
+                ModelState.AddModelError("Password", "fallo de contraseña");
             }
             return View(model);
         }

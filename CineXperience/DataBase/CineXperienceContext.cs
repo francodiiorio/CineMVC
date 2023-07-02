@@ -26,6 +26,28 @@ namespace CineXperience.DataBase
                 new Rol { Id = 3, Name = Displays.RolCliente, NormalizedName = Displays.RolCliente.ToUpper() },
                 new Rol { Id = 4, Name = Displays.RolUsuario, NormalizedName = Displays.RolUsuario.ToUpper() }
             );
+
+            var adminUser = new Usuario
+            {
+                Nombre= "admin",
+                Apellido= "admin",
+                Email = "admin@ort.edu.ar"
+            };
+            var passwordHasher = new PasswordHasher<Usuario>();
+            var hashedPassword = passwordHasher.HashPassword(adminUser, Negocio.ContraseniaPred);
+            builder.Entity<Usuario>().HasData(
+                new Usuario { Id = 1,
+                    Nombre=adminUser.Nombre, 
+                    Apellido=adminUser.Apellido, 
+                    Email= adminUser.Email, 
+                    UserName= adminUser.Email, 
+                    NormalizedUserName= adminUser.Email.ToUpper(),
+                    PasswordHash = hashedPassword,
+                    SecurityStamp = Guid.NewGuid().ToString()
+                }
+                );
+            builder.Entity<IdentityUserRole<int>>().HasData(
+                new IdentityUserRole<int> { RoleId=1, UserId=1});
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
