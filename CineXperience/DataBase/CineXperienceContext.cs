@@ -19,6 +19,13 @@ namespace CineXperience.DataBase
             builder.Entity<IdentityUser<int>>().ToTable("Usuarios");
             builder.Entity<IdentityRole<int>>().ToTable("Roles");
             builder.Entity<IdentityUserRole<int>>().ToTable("PersonasRoles");
+
+            builder.Entity<Rol>().HasData(
+                new Rol { Id = 1, Name = Displays.RolAdmin, NormalizedName = Displays.RolAdmin.ToUpper() },
+                new Rol { Id = 2, Name = Displays.RolEmpleado, NormalizedName = Displays.RolEmpleado.ToUpper() },
+                new Rol { Id = 3, Name = Displays.RolCliente, NormalizedName = Displays.RolCliente.ToUpper() },
+                new Rol { Id = 4, Name = Displays.RolUsuario, NormalizedName = Displays.RolUsuario.ToUpper() }
+            );
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
