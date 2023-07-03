@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CineXperience.DataBase;
 using CineXperience.Models;
+using Microsoft.AspNetCore.Identity;
+using CineXperience.Helpers;
 
 namespace CineXperience.Controllers
 {
     public class UsuariosController : Controller
     {
         private readonly CineXperienceContext _context;
+        private readonly UserManager<Usuario> _userManager;
 
-        public UsuariosController(CineXperienceContext context)
+        public UsuariosController(CineXperienceContext context, UserManager<Usuario>userManager)
         {
             _context = context;
+            this._userManager = userManager;
         }
 
         // GET: Usuarios
@@ -54,13 +58,41 @@ namespace CineXperience.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Dni,Email")] Usuario usuario)
+        public async Task<IActionResult> Create(bool AdminUser,[Bind("Id,Nombre,Apellido,Dni,Email")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                usuario.UserName = usuario.Email;
+
+                var resultado = await _userManager.CreateAsync(usuario, Negocio.ContraseniaPred);
+                if (resultado.Succeeded)
+                {
+                    IdentityResult resultadoRol;
+                    string rol;
+                    if (AdminUser)
+                    {
+                        rol = Displays.RolAdmin;                     
+                    }
+                    else
+                    {
+                        rol = Displays.RolUsuario;                       
+                    }
+                    resultadoRol = await _userManager.AddToRoleAsync(usuario, rol);
+                    if (resultadoRol.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        await _userManager.DeleteAsync(usuario);
+                        return Content($"No se pudo agregar el rol {Displays.RolAdmin}");
+
+                    }
+                }
+                foreach(var error in resultado.Errors)
+                {
+                    ModelState.AddModelError(String.Empty, error.Description);
+                }
             }
             return View(usuario);
         }

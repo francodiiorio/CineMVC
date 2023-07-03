@@ -1,4 +1,5 @@
-﻿using CineXperience.Models;
+﻿using CineXperience.Helpers;
+using CineXperience.Models;
 using CineXperience.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,11 +8,11 @@ namespace CineXperience.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<Usuario> _usermanager;
+        private readonly UserManager<Usuario> _userManager;
         private readonly SignInManager<Usuario> _signInManager;
         public AccountController(UserManager<Usuario> userManager, SignInManager<Usuario>signInManager) 
         {
-            this._usermanager = userManager;
+            this._userManager = userManager;
             this._signInManager = signInManager;
         }
         public IActionResult Registrar()
@@ -33,13 +34,21 @@ namespace CineXperience.Controllers
                     UserName = model.Email,
 
                 };
-                var resultado = await _usermanager.CreateAsync(cliente, model.Password);
+                var resultado = await _userManager.CreateAsync(cliente, model.Password);
 
 
                 if (resultado.Succeeded)
                 {
-                    await _signInManager.SignInAsync(cliente, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    var resultadoRol = await _userManager.AddToRoleAsync(cliente, Displays.RolCliente);
+                    if (resultadoRol.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(cliente, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(String.Empty, $"No se pudo agregar el rol de {Displays.RolCliente}");
+                    }
                 }
                 foreach(var error in resultado.Errors)
                 {
