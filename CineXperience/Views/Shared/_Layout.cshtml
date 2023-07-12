@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CineXperience.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -25,10 +26,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Peliculas" asp-action="Index">Peliculas</a>
                         </li>
+                        
                         @if (signInManager.IsSignedIn(User))
                         {
                             @if (User.IsInRole(Displays.RolAdmin) || User.IsInRole(Displays.RolEmpleado) || User.IsInRole(Displays.RolCliente))
                             {
+                                @if (User.IsInRole(Displays.RolCliente))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Entradas" asp-action="IndexCliente">Movimientos</a>
+                                    </li>
+                                }
                                 @if (User.IsInRole(Displays.RolAdmin) || User.IsInRole(Displays.RolEmpleado))
                                 {
                                     <li class="nav-item">

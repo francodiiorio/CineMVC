@@ -11,88 +11,86 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CineXperience.Controllers
 {
-    public class PeliculasController : Controller
+    [Authorize(Roles ="Admin, Empleado")]
+    public class SalasController : Controller
     {
         private readonly CineXperienceContext _context;
 
-        public PeliculasController(CineXperienceContext context)
+        public SalasController(CineXperienceContext context)
         {
             _context = context;
         }
 
-        // GET: Peliculas
+        // GET: Salas
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Pelicula.ToListAsync());
+              return View(await _context.Salas.ToListAsync());
         }
 
-        // GET: Peliculas/Details/5
+        // GET: Salas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Pelicula == null)
+            if (id == null || _context.Salas == null)
             {
                 return NotFound();
             }
 
-            var pelicula = await _context.Pelicula
+            var sala = await _context.Salas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (pelicula == null)
+            if (sala == null)
             {
                 return NotFound();
             }
 
-            return View(pelicula);
+            return View(sala);
         }
 
-        // GET: Peliculas/Create
-        [Authorize(Roles ="Admin, Empleado")]
+        // GET: Salas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Peliculas/Create
+        // POST: Salas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Duracion,Director,Genero,Foto")] Pelicula pelicula)
+        public async Task<IActionResult> Create([Bind("Id,Capacidad")] Sala sala)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pelicula);
+                _context.Add(sala);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(pelicula);
+            return View(sala);
         }
 
-        // GET: Peliculas/Edit/5
-        [Authorize(Roles = "Admin, Empleado")]
+        // GET: Salas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Pelicula == null)
+            if (id == null || _context.Salas == null)
             {
                 return NotFound();
             }
 
-            var pelicula = await _context.Pelicula.FindAsync(id);
-            if (pelicula == null)
+            var sala = await _context.Salas.FindAsync(id);
+            if (sala == null)
             {
                 return NotFound();
             }
-            return View(pelicula);
+            return View(sala);
         }
 
-        // POST: Peliculas/Edit/5
+        // POST: Salas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin, Empleado")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Duracion,Director,Genero,Foto")] Pelicula pelicula)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Capacidad")] Sala sala)
         {
-            if (id != pelicula.Id)
+            if (id != sala.Id)
             {
                 return NotFound();
             }
@@ -101,12 +99,12 @@ namespace CineXperience.Controllers
             {
                 try
                 {
-                    _context.Update(pelicula);
+                    _context.Update(sala);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PeliculaExists(pelicula.Id))
+                    if (!SalaExists(sala.Id))
                     {
                         return NotFound();
                     }
@@ -117,51 +115,49 @@ namespace CineXperience.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(pelicula);
+            return View(sala);
         }
 
-        // GET: Peliculas/Delete/5
-        [Authorize(Roles = "Admin, Empleado")]
+        // GET: Salas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Pelicula == null)
+            if (id == null || _context.Salas == null)
             {
                 return NotFound();
             }
 
-            var pelicula = await _context.Pelicula
+            var sala = await _context.Salas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (pelicula == null)
+            if (sala == null)
             {
                 return NotFound();
             }
 
-            return View(pelicula);
+            return View(sala);
         }
 
-        // POST: Peliculas/Delete/5
-        [Authorize(Roles = "Admin, Empleado")]
+        // POST: Salas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Pelicula == null)
+            if (_context.Salas == null)
             {
-                return Problem("Entity set 'CineXperienceContext.Pelicula'  is null.");
+                return Problem("Entity set 'CineXperienceContext.Salas'  is null.");
             }
-            var pelicula = await _context.Pelicula.FindAsync(id);
-            if (pelicula != null)
+            var sala = await _context.Salas.FindAsync(id);
+            if (sala != null)
             {
-                _context.Pelicula.Remove(pelicula);
+                _context.Salas.Remove(sala);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PeliculaExists(int id)
+        private bool SalaExists(int id)
         {
-          return _context.Pelicula.Any(e => e.Id == id);
+          return _context.Salas.Any(e => e.Id == id);
         }
     }
 }

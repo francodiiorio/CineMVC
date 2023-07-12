@@ -1,10 +1,11 @@
 ﻿using CineXperience.Helpers;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CineXperience.Models
 {
     public class Entrada
-    {
+    {        
         public int Id { get; set; }
 
         [Required(ErrorMessage = MsgError.Requerido)]

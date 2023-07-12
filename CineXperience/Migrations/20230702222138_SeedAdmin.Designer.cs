@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CineXperience.Migrations
 {
     [DbContext(typeof(CineXperienceContext))]
-    [Migration("20230702231800_SeedAdmin")]
+    [Migration("20230702222138_SeedAdmin")]
     partial class SeedAdmin
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -319,13 +319,6 @@ namespace CineXperience.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("PersonasRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            RoleId = 1
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -357,28 +350,28 @@ namespace CineXperience.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "684d9c7e-961a-4640-80b2-163105ae6845",
+                            ConcurrencyStamp = "5425fee4-e40e-4b75-a08c-fd84a65dd05c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "2168e05f-f4b8-49bd-91c6-d173045fada1",
+                            ConcurrencyStamp = "60b48afb-c68a-41dc-b25b-6d4ba97dba05",
                             Name = "Empleado",
                             NormalizedName = "EMPLEADO"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "271439dc-6882-40c5-a06f-a0ac3da27d0f",
+                            ConcurrencyStamp = "c4b4c7ed-1f9c-4532-9c7f-1579070b1b10",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = 4,
-                            ConcurrencyStamp = "ffa04f30-3776-4330-9ab5-3511fdfb58fd",
+                            ConcurrencyStamp = "9407eb76-b39b-4b8f-9601-cccfd1c8d842",
                             Name = "Usuario",
                             NormalizedName = "USUARIO"
                         });
@@ -408,14 +401,12 @@ namespace CineXperience.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2f2d9eae-41cd-4301-b14f-182d370b8638",
+                            ConcurrencyStamp = "f7c7bf11-9480-48a2-96f8-dc3590f107f1",
                             Email = "admin@ort.edu.ar",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedUserName = "ADMIN@ORT.EDU.AR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAy0obnwOsVEmFt+ZRzAdIeAHdHWzlCZ6VVWrjsQ+qouz4Dovx4FN6Uf3jSmfxK3sg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHU6WRdGPCcXClMt/VWjQ1tgUYGt9Afvbzi492+7CakoDxdjvhAF8ET8nKG1fgting==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7a95025a-6b45-4fce-bbf2-69142f8cad2d",
                             TwoFactorEnabled = false,
                             UserName = "admin@ort.edu.ar",
                             Apellido = "admin",

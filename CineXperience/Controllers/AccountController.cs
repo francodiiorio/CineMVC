@@ -1,8 +1,10 @@
-﻿using CineXperience.Helpers;
+﻿using CineXperience.DataBase;
+using CineXperience.Helpers;
 using CineXperience.Models;
 using CineXperience.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CineXperience.Controllers
 {
@@ -10,10 +12,12 @@ namespace CineXperience.Controllers
     {
         private readonly UserManager<Usuario> _userManager;
         private readonly SignInManager<Usuario> _signInManager;
-        public AccountController(UserManager<Usuario> userManager, SignInManager<Usuario>signInManager) 
+        private readonly CineXperienceContext _context;
+        public AccountController(UserManager<Usuario> userManager, SignInManager<Usuario>signInManager, CineXperienceContext context) 
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
+           this._context = context;
         }
         public IActionResult Registrar()
         {
@@ -58,19 +62,27 @@ namespace CineXperience.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
+            TempData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(Login model)
         {
+            string returnUrl = TempData["ReturnUrl"] as string;
+
             if (ModelState.IsValid)
-            {
+            {             
                 var resultado = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.Recuerdame, false);
+
                 if (resultado.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("Password", "fallo de contraseña");
@@ -82,6 +94,23 @@ namespace CineXperience.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult AccesoDenegado(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        public IActionResult TestCurrentUser()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                string nombreUsuario = User.Identity.Name;
+                Usuario usuario = _context.Usuarios.FirstOrDefault(u => u.NormalizedUserName == nombreUsuario.ToUpper());
+                int usuarioId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+            return View();
         }
     }
 }

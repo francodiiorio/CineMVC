@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CineXperience.DataBase;
 using CineXperience.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CineXperience.Controllers
 {
@@ -20,12 +21,19 @@ namespace CineXperience.Controllers
         }
 
         // GET: Funciones
+        [Authorize(Roles ="Admin, Empleados")]
         public async Task<IActionResult> Index()
         {
             var cineXperienceContext = _context.Funcion.Include(f => f.Pelicula).Include(f => f.Sala);
             return View(await cineXperienceContext.ToListAsync());
         }
 
+        public async Task<IActionResult> IndexByMovie(int peliculaId)
+        {
+            var funciones = _context.Funcion.Include(f => f.Sala).Include(f => f.Pelicula).Where(f => f.PeliculaId == peliculaId);
+
+            return View(await funciones.ToListAsync());
+        }
         // GET: Funciones/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,6 +54,7 @@ namespace CineXperience.Controllers
             return View(funcion);
         }
 
+        [Authorize(Roles ="Admin, Empleado")]
         // GET: Funciones/Create
         public IActionResult Create()
         {
@@ -57,12 +66,26 @@ namespace CineXperience.Controllers
         // POST: Funciones/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Empleado")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,SalaId,PeliculaId,Fecha,Hora,Precio")] Funcion funcion)
         {
             if (ModelState.IsValid)
             {
+                bool funcionExistente = _context.Funcion.Any(f =>
+                    f.SalaId == funcion.SalaId &&
+                    f.Fecha == funcion.Fecha &&
+                    f.Hora == funcion.Hora);
+
+                if (funcionExistente)
+                {
+                    ModelState.AddModelError(String.Empty, "Ya existe una función con la misma sala, fecha y hora.");
+                    ViewData["PeliculaId"] = new SelectList(_context.Pelicula, "Id", "Nombre", funcion.PeliculaId);
+                    ViewData["SalaId"] = new SelectList(_context.Salas, "Id", "Id", funcion.SalaId);
+                    return View(funcion);
+                }
+
                 _context.Add(funcion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -73,6 +96,7 @@ namespace CineXperience.Controllers
         }
 
         // GET: Funciones/Edit/5
+        [Authorize(Roles = "Admin, Empleado")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Funcion == null)
@@ -93,6 +117,7 @@ namespace CineXperience.Controllers
         // POST: Funciones/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Empleado")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,SalaId,PeliculaId,Fecha,Hora,Precio")] Funcion funcion)
@@ -128,6 +153,7 @@ namespace CineXperience.Controllers
         }
 
         // GET: Funciones/Delete/5
+        [Authorize(Roles = "Admin, Empleado")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Funcion == null)
@@ -148,6 +174,7 @@ namespace CineXperience.Controllers
         }
 
         // POST: Funciones/Delete/5
+        [Authorize(Roles = "Admin, Empleado")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -170,5 +197,7 @@ namespace CineXperience.Controllers
         {
           return _context.Funcion.Any(e => e.Id == id);
         }
+
+       
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CineXperience.Migrations
 {
     [DbContext(typeof(CineXperienceContext))]
-    [Migration("20230702172907_SeedRoles")]
-    partial class SeedRoles
+    [Migration("20230702230841_UpdateSeedAdmin")]
+    partial class UpdateSeedAdmin
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -319,6 +319,13 @@ namespace CineXperience.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("PersonasRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -350,28 +357,28 @@ namespace CineXperience.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "3b3cb961-14c7-4f73-9167-54a38e11f19c",
+                            ConcurrencyStamp = "0ad185b9-baf6-4954-99ab-b623aec1c90d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "45013f8d-bf2e-41f0-b73c-c556ee340319",
+                            ConcurrencyStamp = "cc89bb1e-c55c-476e-9b83-8edc117653ce",
                             Name = "Empleado",
                             NormalizedName = "EMPLEADO"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "e6e827ca-4c12-482c-9133-1337ae7af8e5",
+                            ConcurrencyStamp = "04806b6c-28d7-40f7-aac6-4b2b1d64d6cb",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = 4,
-                            ConcurrencyStamp = "225ebad8-ed20-43bd-9207-c66c7455d6ca",
+                            ConcurrencyStamp = "2e817730-a855-4d90-831e-be31f08ff4b3",
                             Name = "Usuario",
                             NormalizedName = "USUARIO"
                         });
@@ -395,6 +402,25 @@ namespace CineXperience.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasDiscriminator().HasValue("Usuario");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "fb37f5d4-a88b-4bad-9dd5-7e1991e72978",
+                            Email = "admin@ort.edu.ar",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "ADMIN@ORT.EDU.AR",
+                            PasswordHash = "AQAAAAEAACcQAAAAENteCBxF5MwpAHE68legWDO+iISg74W1JBvvWo8GB4+u4UAKxmorsf7RcPOfvr58wg==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "admin@ort.edu.ar",
+                            Apellido = "admin",
+                            Dni = 0,
+                            Nombre = "admin"
+                        });
                 });
 
             modelBuilder.Entity("CineXperience.Models.Cliente", b =>

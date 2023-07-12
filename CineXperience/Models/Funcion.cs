@@ -7,6 +7,8 @@ namespace CineXperience.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = MsgError.Requerido)]
+
+        [Display(Name = Displays.SalaNumber)]
         public int SalaId { get; set; }
         public Sala Sala { get; set; }
         [Required(ErrorMessage = MsgError.Requerido)]
@@ -25,5 +27,6 @@ namespace CineXperience.Models
         public int Precio { get; set; }
 
         public List<Entrada> movimientos { get; set; }
+
     }
 }

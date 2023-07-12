@@ -2,6 +2,7 @@
 {
     public static class Displays
     {
+        public const string SalaNumber = "Numero de sala";
         public const string CorreoElectronico = "Correo electrónico";
         public const string NameDisplay = "Correo electrónico";
         public const string Password = "Contraseña";

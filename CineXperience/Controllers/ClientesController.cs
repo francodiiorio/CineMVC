@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CineXperience.DataBase;
 using CineXperience.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CineXperience.Controllers
 {
+    [Authorize]
     public class ClientesController : Controller
     {
         private readonly CineXperienceContext _context;
@@ -202,5 +204,7 @@ namespace CineXperience.Controllers
         {
           return _context.Clientes.Any(e => e.Id == id);
         }
+
+       
     }
 }

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<CineXperience.Models.Entrada>
+
+@{
+    ViewData["Title"] = "IndexCliente";
+}
+
+<h1>Index</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Funcion.Pelicula.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente.Dni)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Funcion.Precio)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Funcion.Pelicula.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.Dni)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Funcion.Precio)
+                </td>
+                               
+            </tr>
+        }
+    </tbody>
+</table>

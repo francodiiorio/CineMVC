@@ -13,10 +13,10 @@ namespace CineXperience.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "3b3cb961-14c7-4f73-9167-54a38e11f19c", "Rol", "Admin", "ADMIN" },
-                    { 2, "45013f8d-bf2e-41f0-b73c-c556ee340319", "Rol", "Empleado", "EMPLEADO" },
-                    { 3, "e6e827ca-4c12-482c-9133-1337ae7af8e5", "Rol", "Cliente", "CLIENTE" },
-                    { 4, "225ebad8-ed20-43bd-9207-c66c7455d6ca", "Rol", "Usuario", "USUARIO" }
+                    { 1, "fd6c26a4-7260-4629-8ab7-f09ec5d61e30", "Rol", "Admin", null },
+                    { 2, "86234e37-f0b0-4424-81e7-27cd55e21d87", "Rol", "Cliente", null },
+                    { 3, "7638661c-ce59-4e91-bdf6-616f5c093c3e", "Rol", "Empleado", null },
+                    { 4, "8316af5f-6c19-4eb3-ad77-7a305558d037", "Rol", "Usuario", null }
                 });
         }
 

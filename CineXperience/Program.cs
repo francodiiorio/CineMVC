@@ -1,5 +1,7 @@
 using CineXperience.DataBase;
 using CineXperience.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CineXperienceContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CineXperienceDBCS")));
 builder.Services.AddIdentity<Usuario, Rol>().AddEntityFrameworkStores<CineXperienceContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+            opciones =>
+            {
+                opciones.LoginPath = "/Account/Login";
+                opciones.AccessDeniedPath = "/Account/AccesoDenegado";
+                opciones.Cookie.Name = "IdentidadCineXperienceApp";
+            });
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

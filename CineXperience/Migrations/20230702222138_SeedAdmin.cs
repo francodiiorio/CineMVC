@@ -13,47 +13,37 @@ namespace CineXperience.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "ConcurrencyStamp",
-                value: "684d9c7e-961a-4640-80b2-163105ae6845");
+                value: "5425fee4-e40e-4b75-a08c-fd84a65dd05c");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "ConcurrencyStamp",
-                value: "2168e05f-f4b8-49bd-91c6-d173045fada1");
+                value: "60b48afb-c68a-41dc-b25b-6d4ba97dba05");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "ConcurrencyStamp",
-                value: "271439dc-6882-40c5-a06f-a0ac3da27d0f");
+                value: "c4b4c7ed-1f9c-4532-9c7f-1579070b1b10");
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "ConcurrencyStamp",
-                value: "ffa04f30-3776-4330-9ab5-3511fdfb58fd");
+                value: "9407eb76-b39b-4b8f-9601-cccfd1c8d842");
 
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "AccessFailedCount", "Apellido", "ConcurrencyStamp", "Discriminator", "Dni", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Nombre", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "admin", "2f2d9eae-41cd-4301-b14f-182d370b8638", "Usuario", 0, "admin@ort.edu.ar", false, false, null, "admin", null, "ADMIN@ORT.EDU.AR", "AQAAAAEAACcQAAAAEAy0obnwOsVEmFt+ZRzAdIeAHdHWzlCZ6VVWrjsQ+qouz4Dovx4FN6Uf3jSmfxK3sg==", null, false, "7a95025a-6b45-4fce-bbf2-69142f8cad2d", false, "admin@ort.edu.ar" });
-
-            migrationBuilder.InsertData(
-                table: "PersonasRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { 1, 1 });
+                values: new object[] { 1, 0, "admin", "f7c7bf11-9480-48a2-96f8-dc3590f107f1", "Usuario", 0, "admin@ort.edu.ar", false, false, null, "admin", null, null, "AQAAAAEAACcQAAAAEHU6WRdGPCcXClMt/VWjQ1tgUYGt9Afvbzi492+7CakoDxdjvhAF8ET8nKG1fgting==", null, false, null, false, "admin@ort.edu.ar" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "PersonasRoles",
-                keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { 1, 1 });
-
             migrationBuilder.DeleteData(
                 table: "Usuarios",
                 keyColumn: "Id",

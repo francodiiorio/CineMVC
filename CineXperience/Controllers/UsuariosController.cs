@@ -9,9 +9,11 @@ using CineXperience.DataBase;
 using CineXperience.Models;
 using Microsoft.AspNetCore.Identity;
 using CineXperience.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CineXperience.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class UsuariosController : Controller
     {
         private readonly CineXperienceContext _context;

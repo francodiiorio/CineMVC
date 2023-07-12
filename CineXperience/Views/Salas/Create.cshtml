@@ -1,4 +1,4 @@
-﻿@model CineXperience.Models.Entrada
+﻿@model CineXperience.Models.Sala
 
 @{
     ViewData["Title"] = "Create";
@@ -6,17 +6,17 @@
 
 <h1>Create</h1>
 
-<h4>Entrada</h4>
+<h4>Sala</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CantAsientos" class="control-label"></label>
-                <input asp-for="CantAsientos" class="form-control" />
-                <span asp-validation-for="CantAsientos" class="text-danger"></span>
-            </div>           
+                <label asp-for="Capacidad" class="control-label"></label>
+                <input asp-for="Capacidad" class="form-control" />
+                <span asp-validation-for="Capacidad" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

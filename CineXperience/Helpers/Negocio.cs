@@ -6,5 +6,6 @@
         public const string ContraseniaPred = "Password1!";
         public const int CapacidadMax = 100;
         public const int LegajoLength = 4;
+        public const string FotoDefault = "default.png";
     }
 }

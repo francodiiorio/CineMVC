@@ -17,6 +17,6 @@ namespace CineXperience.Models
 
         [Required(ErrorMessage = MsgError.Requerido)]
         public Genero Genero { get; set; }
-        public string Foto { get; set; }
+        public string Foto { get; set; } = Negocio.FotoDefault;
     }
 }
